@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 
 import { TurnSystem, AISystem, RenderSystem, System } from 'systems';
+import { Playground } from 'tactics';
 import type { Entity } from 'entity';
 import {
   Metadata,
@@ -30,6 +31,10 @@ export default class extends Phaser.State {
   preload() {}
 
   create() {
+    // TODO remove me
+    const pg = new Playground();
+    pg.run();
+
     this.engine = {};
 
     this.engine.log = ['log initialized'];
