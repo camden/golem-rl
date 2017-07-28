@@ -32,6 +32,20 @@ export class Predicate implements Tactic {
   }
 }
 
+export class And implements Tactic {
+  first: Tactic;
+  second: Tactic;
+
+  constructor({ first, second }) {
+    this.first = first;
+    this.second = second;
+  }
+
+  execute() {
+    return this.first.execute() && this.second.execute();
+  }
+}
+
 export class LessThan implements Tactic {
   first: number;
   second: number;
@@ -63,11 +77,22 @@ export class Playground {
   run() {
     const t = new Predicate({
       condition: new LessThan({
-        first: 40,
+        first: 10,
         second: 30,
       }),
-      success: new ConsoleTactic({
-        message: 'Success!',
+      success: new And({
+        first: new ConsoleTactic({
+          message: 'First one true',
+        }),
+        second: new Predicate({
+          condition: new LessThan({
+            first: 10,
+            second: 20,
+          }),
+          success: new ConsoleTactic({
+            message: 'Both true',
+          }),
+        }),
       }),
       failure: new ConsoleTactic({
         message: 'Failure',
