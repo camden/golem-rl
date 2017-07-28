@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 
 import { TurnSystem, AISystem, RenderSystem, System } from 'systems';
-import { Playground } from 'tactics';
+import { ConsoleTactic, Playground } from 'tactics';
 import type { Entity } from 'entity';
 import {
   Metadata,
@@ -12,6 +12,7 @@ import {
   Player,
   Renderable,
   Actor,
+  Tactics,
 } from 'component';
 import { onKeyPress } from 'input';
 import ComponentManager from 'component-manager';
@@ -49,6 +50,7 @@ export default class extends Phaser.State {
         Collidable,
         Transform,
         Renderable,
+        Tactics,
       ],
     });
 
@@ -91,6 +93,11 @@ export default class extends Phaser.State {
         new Metadata({
           name: 'Skeleton',
           description: 'A spooky boneman',
+        }),
+        new Tactics({
+          tactic: new ConsoleTactic({
+            message: "Hi, I'm a spooky skeleton, and I acted!",
+          }),
         }),
       ],
     });

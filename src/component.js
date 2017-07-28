@@ -1,5 +1,7 @@
 // @flow
 
+import { Tactic } from 'tactics';
+
 export class Component {}
 
 export class Renderable extends Component {
@@ -13,6 +15,15 @@ export class Renderable extends Component {
     }
 
     this.glyph = glyph;
+  }
+}
+
+export class Tactics extends Component {
+  tactic: Tactic;
+
+  constructor({ tactic }: { tactic: Tactic }) {
+    super();
+    this.tactic = tactic;
   }
 }
 

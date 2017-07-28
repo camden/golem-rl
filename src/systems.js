@@ -2,10 +2,11 @@
 import { keyMap, getCommand } from 'input';
 import type { Entity } from 'entity';
 import {
-  Metadata,
   Actor,
+  Metadata,
   Player,
   Renderable,
+  Tactics,
   Transform,
   Turn,
 } from 'component';
@@ -45,10 +46,12 @@ export class AISystem implements System {
           return;
         }
 
-        const transformComponent = this.componentManager.get({
+        const tacticsComponent = this.componentManager.get({
           entity: entity,
-          component: Transform,
+          component: Tactics,
         });
+
+        tacticsComponent.tactic.execute();
 
         const metadata = this.componentManager.get({
           entity: entity,

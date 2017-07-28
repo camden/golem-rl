@@ -1,6 +1,6 @@
 // @flow
 
-interface Tactic {
+export interface Tactic {
   execute(): boolean,
 }
 
@@ -36,7 +36,7 @@ export class And implements Tactic {
   first: Tactic;
   second: Tactic;
 
-  constructor({ first, second }) {
+  constructor({ first, second }: { first: Tactic, second: Tactic }) {
     this.first = first;
     this.second = second;
   }
