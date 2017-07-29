@@ -1,10 +1,13 @@
 // @flow
 
+import type { Entity } from 'entity';
+import { Metadata } from 'component';
+
 export interface Tactic {
   execute(): boolean,
 }
 
-export class Predicate implements Tactic {
+export class If implements Tactic {
   condition: Tactic;
   success: Tactic;
   failure: Tactic;
@@ -73,9 +76,33 @@ export class ConsoleTactic implements Tactic {
   }
 }
 
+export class GetProp implements Tactic {
+  entity: string;
+  component: Function;
+  prop: string;
+
+  constructor({ entity, component, prop }) {
+    this.entity = entity;
+    this.component = component;
+    this.prop = prop;
+  }
+
+  execute() {
+    return true;
+  }
+}
+
 export class Playground {
   run() {
-    const t = new Predicate({
+    const fetch = new ConsoleTactic({
+      message: new GetProp({
+        entity: 1,
+        component: Metadata,
+        prop: 'name',
+      }),
+    });
+
+    const t = new If({
       condition: new LessThan({
         first: 10,
         second: 30,
@@ -84,7 +111,7 @@ export class Playground {
         first: new ConsoleTactic({
           message: 'First one true',
         }),
-        second: new Predicate({
+        second: new If({
           condition: new LessThan({
             first: 10,
             second: 20,
